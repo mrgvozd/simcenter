@@ -9,7 +9,7 @@ body {
 
 .container {
     width: 90%;
-    max-width: 1200px;
+    min-width: 1080px;
     margin: 50px auto;
     background-color: #fff;
     padding: 30px;
