@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         data.forEach(item => {
             const row = document.createElement("tr");
             row.innerHTML = `
-				<td>${item['03.03.2025-07.03.2025']}</td> 
+				<td>${item['10.03.2025-15.03.2025']}</td> 
 				<td>${item['Время']}</td>
 				<td>${item['ППС']}</td>
 				<td>${item['каб']}</td>
