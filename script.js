@@ -38,11 +38,16 @@ document.addEventListener('DOMContentLoaded', function () {
 				<td>${item['каб']}</td>
 				<td>${item['№ гр.']}</td>
 				<td>${item['Тема']}</td>
-				<td>${item['Дополнительные занятия']}</td>
+				<td>${formatMultilineText(item['Дополнительные занятия'])}</td>
             `;
             tableBody.appendChild(row);
         });
     }
+
+	function formatMultilineText(text) {
+		if (text.length>1) text = '• '+text.trimEnd();
+		return String(text || '').replace(/\n/g, '<br>• ');
+	}
 
 	function mergeCells() {
         const rows = tableBody.querySelectorAll("tr");
@@ -51,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		// Объединение ячеек во втором столбце (Название группы)
 		mergeColumn(rows, 1);
+		//mergeColumn(rows, 2);
 	}
 	
 	function mergeColumn(rows, col) {
