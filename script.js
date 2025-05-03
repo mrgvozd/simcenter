@@ -51,50 +51,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	function mergeCells() {
         const rows = tableBody.querySelectorAll("tr");
-		    // Объединение ячеек в первом столбце (Время)
-		//mergeColumn(rows, 0);
-		updateScheduleTable();
-		// Объединение ячеек во втором столбце (Название группы)
-		//mergeColumn(rows, 1);
-	}
-
-	function updateScheduleTable() {
-	  const rows = tableBody.getElementsByTagName('tr');
-	
-	  // Keep track of the previous date and time
-	  let prevDate = null;
-	  let prevTime = null;
-	  let rowSpan = 1;
-	
-	  // Iterate through the rows, starting from the second row (assuming the first row is the header)
-	  for (let i = 1; i < rows.length; i++) {
-	    const cells = rows[i].getElementsByTagName('td');
-	
-	    // Get the current date, time, and topic
-	    const currentDate = cells[0].textContent;
-	    const currentTime = cells[1].textContent;
-	
-	    // Check if the date or time has changed
-	    if (currentDate !== prevDate || currentTime !== prevTime) {
-	      // If the date or time has changed, reset the rowSpan
-	      rowSpan = 1;
-	    } else {
-	      // If the date and time are the same, increment the rowSpan
-	      rowSpan++;
-	      cells[0].rowSpan = rowSpan;
-	      cells[1].rowSpan = rowSpan;
-	    }
-	
-	    // Update the table cells with the current data
-	    cells[0].textContent = currentDate;
-	    cells[1].textContent = currentTime;
-	
-	    // Update the previous date and time
-	    prevDate = currentDate;
-	    prevTime = currentTime;
-	  }
-	}
-	
+		// Объединение ячеек в первом столбце (день)
+		mergeColumn(rows, 0);
+		// Объединение ячеек во втором столбце (время)
+		mergeColumn(rows, 1);
+	}	
 	function mergeColumn(rows, col) {
         	let previousValue = null;
         	let startRow = null;
