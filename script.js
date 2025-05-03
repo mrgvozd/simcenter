@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			if (col){
 				let size = row.querySelectorAll("td").length;
 				firstrow = size==7?true:false;
+				swap = firstrow?true:swap;
 			}
 			
 			const currentCell = row.querySelectorAll("td")[firstrow?1:0];
