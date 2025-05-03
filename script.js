@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			
 			if (currentValue === previousValue) {
 				currentCell.remove();
-				startRow.querySelectorAll("td")[swap?1:0].rowSpan += 1;
+				startRow.querySelectorAll("td")[col].rowSpan += 1;
 			} else {
 				previousValue = currentValue;
 				startRow = row;
