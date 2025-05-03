@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			if (col){
 				let size = row.querySelectorAll("td").length;
 				firstrow = size==7?true:false;
-				swap = firstrow?true:swap;
+				swap = firstrow?false:swap;
 			}
 			
 			const currentCell = row.querySelectorAll("td")[firstrow?1:0];
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			
 			if (currentValue === previousValue) {
 				currentCell.remove();
-				startRow.querySelectorAll("td")[col].rowSpan += 1;
+				startRow.querySelectorAll("td")[swap?1:0].rowSpan += 1;
 			} else {
 				previousValue = currentValue;
 				startRow = row;
