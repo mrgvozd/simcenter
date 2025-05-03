@@ -59,8 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 	function updateScheduleTable() {
-	  const table = document.getElementById(tableBody);
-	  const rows = table.getElementsByTagName('tr');
+	  const rows = tableBody.getElementsByTagName('tr');
 	
 	  // Keep track of the previous date and time
 	  let prevDate = null;
