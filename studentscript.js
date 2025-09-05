@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const tableBody = document.querySelector("#schedule-table tbody");
     const filterGroup = document.getElementById('filter-group');
 
-    let data = []; // Для хранения исходных данных
+    let myData = []; // Для хранения исходных данных
 
 	// Чтение параметров из URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -13,11 +13,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 
     // Загрузка данных из JSON
-    fetch('data.json')
+    fetch('..//data.json')
         .then(response => response.json())
         .then(jsonData => {
-            data = jsonData;
-            renderTable(data);
+            myData = jsonData;
+            renderTable(myData);
             mergeCells(); // Объединение ячеек
         })
         .catch(error => console.error("Ошибка загрузки данных:", error));
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function renderTable(data) {
         tableBody.innerHTML = ""; // Очистка таблицы
 
-        data.forEach(item => {
+        myData.forEach(item => {
             const row = document.createElement("tr");
             row.innerHTML = `
 				<td>${item['datentime']}</td> 
@@ -38,43 +38,71 @@ document.addEventListener('DOMContentLoaded', function () {
             tableBody.appendChild(row);
         });
     }
-
+	
 	function mergeCells() {
-        const rows = tableBody.querySelectorAll("tr");
-		    // Объединение ячеек в первом столбце (Время)
-		mergeColumn(rows, 0);
-
-		// Объединение ячеек во втором столбце (Название группы)
-		mergeColumn(rows, 1);
+		const table = document.querySelector('table');
+		const rows = Array.from(table.rows);
+		
+		// Создаем виртуальное представление таблицы
+		const tableData = rows.map(row => {
+			return Array.from(row.cells).map(cell => ({
+				text: cell.textContent.trim(),
+				element: cell,
+				rowspan: 1
+			}));
+		});
+		
+		const cols = tableData[0].length;
+		
+		// Проходим по каждому столбцу слева направо
+		for (let col = 0; col < cols; col++) {
+			// Проходим по строкам снизу вверх
+			for (let row = rows.length - 1; row > 0; row--) {
+				// Пропускаем если строки разной длины
+				if (tableData[row].length <= col || tableData[row-1].length <= col) continue;
+				
+				// Проверяем, что все предыдущие столбцы совпадают
+				let previousColumnsMatch = true;
+				for (let prevCol = 0; prevCol < col; prevCol++) {
+					if (tableData[row][prevCol] && tableData[row-1][prevCol]) {
+						if (tableData[row][prevCol].text !== tableData[row-1][prevCol].text) {
+							previousColumnsMatch = false;
+							break;
+						}
+					}
+				}
+				
+				// Если предыдущие столбцы совпадают и текущие значения равны
+				if (previousColumnsMatch && 
+					tableData[row][col] && 
+					tableData[row-1][col] &&
+					tableData[row][col].text === tableData[row-1][col].text) {
+					
+					// Увеличиваем rowspan у ячейки выше
+					tableData[row-1][col].rowspan += tableData[row][col].rowspan;
+					
+					// Помечаем текущую ячейку для удаления
+					tableData[row][col].shouldRemove = true;
+				}
+			}
+		}
+		
+		// Применяем изменения к DOM
+		for (let row = 0; row < tableData.length; row++) {
+			for (let col = 0; col < tableData[row].length; col++) {
+				const cellData = tableData[row][col];
+				
+				if (cellData.shouldRemove) {
+					// Удаляем ячейку из DOM
+					cellData.element.parentNode.removeChild(cellData.element);
+				} else if (cellData.rowspan > 1) {
+					// Устанавливаем rowspan
+					cellData.element.setAttribute('rowspan', cellData.rowspan);
+				}
+			}
+		}
 	}
 	
-	function mergeColumn(rows, col) {
-        let previousValue = null;
-        let startRow = null;
-		let firstrow = false;
-		let swap = false;
-		
-		rows.forEach((row, index) => {
-			if (col){
-				let size = row.querySelectorAll("td").length;
-				firstrow = size==5?true:false;
-				swap = firstrow?false:swap;
-			}
-			
-			const currentCell = row.querySelectorAll("td")[firstrow?1:0];
-			const currentValue = currentCell.textContent
-			
-			if (currentValue === previousValue) {
-				currentCell.remove();
-				startRow.querySelectorAll("td")[swap?1:0].rowSpan += 1;
-			} else {
-				previousValue = currentValue;
-				startRow = row;
-				if (col) swap = !swap;
-			}
-		});
-    }
-
 	
     // Функция для фильтрации данных
     function applyFilters() {

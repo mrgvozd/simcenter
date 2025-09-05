@@ -50,38 +50,68 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 	function mergeCells() {
-        const rows = tableBody.querySelectorAll("tr");
-		// Объединение ячеек в первом столбце (день)
-		mergeColumn(rows, 0);
-		// Объединение ячеек во втором столбце (время)
-		mergeColumn(rows, 1);
-	}	
-	function mergeColumn(rows, col) {
-        	let previousValue = null;
-        	let startRow = null;
-		let firstrow = false;
-		let swap = false;
+		const table = document.querySelector('table');
+		const rows = Array.from(table.rows);
 		
-		rows.forEach((row, index) => {
-			if (col){
-				let size = row.querySelectorAll("td").length;
-				firstrow = size==7?true:false;
-				swap = firstrow?false:swap;
-			}
-			
-			const currentCell = row.querySelectorAll("td")[firstrow?1:0];
-			const currentValue = currentCell.textContent
-			
-			if (currentValue === previousValue) {
-				currentCell.remove();
-				startRow.querySelectorAll("td")[swap?1:0].rowSpan += 1;
-			} else {
-				previousValue = currentValue;
-				startRow = row;
-				if (col) swap = !swap;
-			}
+		// Создаем виртуальное представление таблицы
+		const tableData = rows.map(row => {
+			return Array.from(row.cells).map(cell => ({
+				text: cell.textContent.trim(),
+				element: cell,
+				rowspan: 1
+			}));
 		});
-    }
+		
+		const cols = tableData[0].length;
+		
+		// Проходим по каждому столбцу слева направо
+		for (let col = 0; col < cols; col++) {
+			// Проходим по строкам снизу вверх
+			for (let row = rows.length - 1; row > 0; row--) {
+				// Пропускаем если строки разной длины
+				if (tableData[row].length <= col || tableData[row-1].length <= col) continue;
+				
+				// Проверяем, что все предыдущие столбцы совпадают
+				let previousColumnsMatch = true;
+				for (let prevCol = 0; prevCol < col; prevCol++) {
+					if (tableData[row][prevCol] && tableData[row-1][prevCol]) {
+						if (tableData[row][prevCol].text !== tableData[row-1][prevCol].text) {
+							previousColumnsMatch = false;
+							break;
+						}
+					}
+				}
+				
+				// Если предыдущие столбцы совпадают и текущие значения равны
+				if (previousColumnsMatch && 
+					tableData[row][col] && 
+					tableData[row-1][col] &&
+					tableData[row][col].text === tableData[row-1][col].text) {
+					
+					// Увеличиваем rowspan у ячейки выше
+					tableData[row-1][col].rowspan += tableData[row][col].rowspan;
+					
+					// Помечаем текущую ячейку для удаления
+					tableData[row][col].shouldRemove = true;
+				}
+			}
+		}
+		
+		// Применяем изменения к DOM
+		for (let row = 0; row < tableData.length; row++) {
+			for (let col = 0; col < tableData[row].length; col++) {
+				const cellData = tableData[row][col];
+				
+				if (cellData.shouldRemove) {
+					// Удаляем ячейку из DOM
+					cellData.element.parentNode.removeChild(cellData.element);
+				} else if (cellData.rowspan > 1) {
+					// Устанавливаем rowspan
+					cellData.element.setAttribute('rowspan', cellData.rowspan);
+				}
+			}
+		}
+	}
 
 	
     // Функция для фильтрации данных
