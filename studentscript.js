@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function applyFilters() {
         const groupFilter = filterGroup.value.toLowerCase();
 
-        const filteredData = data.filter(item => {
+        const filteredData = myData.filter(item => {
 			// Преобразуем значения в строки, если они не являются строками
 			const group = String(item['№ гр.'] || '').toLowerCase();
 
@@ -135,4 +135,5 @@ document.addEventListener('DOMContentLoaded', function () {
 		updateURL();
 	});
 });
+
 
