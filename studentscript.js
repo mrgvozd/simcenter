@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error("Ошибка загрузки данных:", error));
 	
     // Функция для отрисовки таблицы
-    function renderTable(data) {
+    function renderTable(myData) {
         tableBody.innerHTML = ""; // Очистка таблицы
 
         myData.forEach(item => {
@@ -135,5 +135,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		updateURL();
 	});
 });
+
 
 
