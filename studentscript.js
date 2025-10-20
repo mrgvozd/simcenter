@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 
     // Загрузка данных из JSON
-    fetch('data.json')
+    fetch('..//data.json')
         .then(response => response.json())
         .then(jsonData => {
             myData = jsonData;
@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
             row.innerHTML = `
 				<td>${item['datentime']}</td> 
 				<td>${item['Время']}</td>
+				<td>${item['ППС']}</td>
 				<td>${item['каб']}</td>
 				<td>${item['№ гр.']}</td>
 				<td>${item['Тема']}</td>
@@ -135,6 +136,3 @@ document.addEventListener('DOMContentLoaded', function () {
 		updateURL();
 	});
 });
-
-
-
