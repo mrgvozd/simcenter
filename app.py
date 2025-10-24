@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 
 # Укажите путь к вашему Excel-файлу
 input_excel_file = 'data.xlsx'
@@ -19,6 +20,8 @@ df['datentime'] = df['datentime'].ffill()
 df['Время'] = df['Время'].ffill()
 df['ППС'] = df['ППС'].ffill()
 
+df['ППС'] = df['ППС'].replace(to_replace="\(.*\)",value="", regex=True)
+
 #аудитории в солнечном
 try:
     df['№ гр.'] = pd.to_numeric(df['№ гр.'])
@@ -30,9 +33,9 @@ for idx, row in df.iterrows():
     try:
         group_val = int(row['№ гр.'])
         if 100 <= group_val <= 199:
-            df.at[idx, 'каб'] = '3.10'
+            df.at[idx, 'каб'] = 'Солнечное, 3.10'
         elif 200 <= group_val <= 299:
-            df.at[idx, 'каб'] = '3.24'
+            df.at[idx, 'каб'] = 'Солнечное, 3.24'
     except (ValueError, TypeError):
         continue
     #df.loc[(df['№ гр.'] >= 100) & (df['№ гр.'] <= 199), 'каб'] = '3.10'
