@@ -93,7 +93,6 @@ table {
 th, td {
     padding: 15px;
     text-align: left;
-    border-bottom: none;/*1px solid var(--border-color);*/
 }
 
 th {
@@ -146,6 +145,7 @@ table tr:last-child td:last-child {
 
 tbody tr {
     animation: fadeIn 0.5s ease-in-out;
+	border-top: 1px solid #505050;
 }
 
 /* Стили для переносов строк */
@@ -201,5 +201,6 @@ td {
 #schedule-table tr.rowspan-border-top-fancy {
     border-top: 0.8px dotted var(--accent-color) !important;
 }
+
 
 
