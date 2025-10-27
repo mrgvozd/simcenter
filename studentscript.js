@@ -112,11 +112,11 @@ document.addEventListener('DOMContentLoaded', function () {
 			const tdCount = row.querySelectorAll("td").length;
 			
 			// Если в строке меньше td, чем должно быть (из-за объединений)
-			if (tdCount == 7) {
+			if (tdCount == 6) {
 				row.classList.add('rowspan-border-top');
 			}
 			
-			if (tdCount == 6) {
+			if (tdCount == 5) {
 				row.classList.add('rowspan-border-top-fancy');
 			}
 		});
@@ -153,5 +153,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		updateURL();
 	});
 });
+
 
 
