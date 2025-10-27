@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
             myData = jsonData;
             renderTable(myData);
             mergeCells(); // Объединение ячеек
+			addSmartColumnBorders();
         })
         .catch(error => console.error("Ошибка загрузки данных:", error));
 	
@@ -103,7 +104,23 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		}
 	}
-	
+
+	function addSmartColumnBorders() {
+		const rows = tableBody.querySelectorAll("tr");
+		
+		rows.forEach(row => {
+			const tdCount = row.querySelectorAll("td").length;
+			
+			// Если в строке меньше td, чем должно быть (из-за объединений)
+			if (tdCount == 7) {
+				row.classList.add('rowspan-border-top');
+			}
+			
+			if (tdCount == 6) {
+				row.classList.add('rowspan-border-top-fancy');
+			}
+		});
+	}
 	
     // Функция для фильтрации данных
     function applyFilters() {
@@ -136,4 +153,5 @@ document.addEventListener('DOMContentLoaded', function () {
 		updateURL();
 	});
 });
+
 
