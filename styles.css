@@ -1,28 +1,50 @@
 /* Основные стили */
+:root {
+    --bg-primary: #0f0f0f;
+    --bg-secondary: #1a1a1a;
+    --bg-card: #2d2d2d;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --accent-color: #6366f1;
+    --accent-hover: #4f46e5;
+    --border-color: #404040;
+    --success-color: #10b981;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+    font-family: 'Inter', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    /* background-color: #f8f9fa; */
     margin: 0;
     padding: 0;
-    color: #333;
+    /* color: #333; */
 }
 
 .container {
     width: 90%;
     min-width: 800px;
     margin: 50px auto;
-    background-color: #fff;
-    padding: 30px;
+    /* background-color: #fff; */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
+	
+	background-color: var(--bg-card);
+    padding: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
 }
 
 h1 {
     text-align: center;
-    color: #2c3e50;
+    color: var(--text-primary);
     font-size: 2.5rem;
     margin-bottom: 30px;
     font-weight: 600;
+    background: linear-gradient(135deg, var(--accent-color), #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* Стили для фильтров */
@@ -35,52 +57,62 @@ h1 {
 
 .filters input {
     padding: 12px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     flex: 1;
     min-width: 200px;
     font-size: 16px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+.filters input::placeholder {
+    color: var(--text-secondary);
 }
 
 .filters input:focus {
-    border-color: #3498db;
-    box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
     outline: none;
+    background-color: var(--bg-primary);
 }
 
-/* Стили для таблицы */
+
 table {
     width: 100%;
     border-collapse: collapse;
+	border-spacing: 0 0.1;
     margin-top: 20px;
-    background-color: #fff;
+    background-color: var(--bg-card);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 th, td {
     padding: 15px;
     text-align: left;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: none;/*1px solid var(--border-color);*/
 }
 
 th {
-    background-color: #3498db;
+    background: var(--accent-color);
     color: white;
     font-weight: 600;
     text-transform: uppercase;
     font-size: 14px;
+    letter-spacing: 0.5px;
 }
 
 td {
-    background-color: #fff;
+    background-color: var(--bg-card);
+    color: var(--text-primary);
     transition: background-color 0.3s ease;
 }
 
 tr:hover td {
-    background-color: #f1f8ff;
+    background-color: rgba(99, 102, 241, 0.1);
 }
 
 /* Закруглённые углы для таблицы */
@@ -116,42 +148,58 @@ tbody tr {
     animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Стилизация шрифтов */
-body {
-    font-family: 'Inter', sans-serif;
-}
-
-h1 {
-    font-family: 'Montserrat', sans-serif;
-}
-
-/* Кнопки (если будут добавлены позже) */
-.button {
-    background-color: #3498db;
-    color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.button:hover {
-    background-color: #2980b9;
+/* Стили для переносов строк */
+td {
+    white-space: pre-line;
+    line-height: 1.5;
 }
 
 /* Адаптивность */
 @media (max-width: 768px) {
-    .filters {
-        flex-direction: column;
+    .container {
+        min-width: 95%;
+        padding: 20px;
+    }
+    
+    table {
+        font-size: 14px;
+    }
+
+    th, td {
+        padding: 10px;
     }
 
     .filters input {
-        width: 100%;
-    }
-
-    table, th, td {
-        font-size: 14px;
+        min-width: 100%;
     }
 }
+
+/* Стили для скроллбара (для современных браузеров) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-hover);
+}
+
+
+/* Верхняя граница для строк, начинающих новую группу */
+#schedule-table tr.rowspan-border-top {
+    border-top: 3px solid var(--accent-color) !important;
+}
+
+#schedule-table tr.rowspan-border-top-fancy {
+    border-top: 0.8px dotted var(--accent-color) !important;
+}
+
+

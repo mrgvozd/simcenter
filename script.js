@@ -16,12 +16,13 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 
     // Загрузка данных из JSON
-    fetch('data.json')
+    fetch('..//data.json')
         .then(response => response.json())
         .then(jsonData => {
             data = jsonData;
             renderTable(data);
             mergeCells(); // Объединение ячеек
+			addSmartColumnBorders();
         })
         .catch(error => console.error("Ошибка загрузки данных:", error));
 	
@@ -113,6 +114,22 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	}
 
+	function addSmartColumnBorders() {
+		const rows = tableBody.querySelectorAll("tr");
+		
+		rows.forEach(row => {
+			const tdCount = row.querySelectorAll("td").length;
+			
+			// Если в строке меньше td, чем должно быть (из-за объединений)
+			if (tdCount == 7) {
+				row.classList.add('rowspan-border-top');
+			}
+			
+			if (tdCount == 6) {
+				row.classList.add('rowspan-border-top-fancy');
+			}
+		});
+	}
 	
     // Функция для фильтрации данных
     function applyFilters() {
