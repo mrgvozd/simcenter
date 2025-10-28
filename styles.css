@@ -191,8 +191,9 @@ td {
 }
 
 #schedule-table tr.rowspan-border-top-fancy {
-    border-top: 0.8px dotted var(--accent-color) !important;
+    border-top: 1.5px dotted var(--accent-color) !important;
 }
+
 
 
 
