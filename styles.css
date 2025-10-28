@@ -156,10 +156,6 @@ td {
 
 /* Адаптивность */
 @media (max-width: 768px) {
-    .container {
-        min-width: 95%;
-        padding: 20px;
-    }
     
     table {
         font-size: 14px;
@@ -167,10 +163,6 @@ td {
 
     th, td {
         padding: 10px;
-    }
-
-    .filters input {
-        min-width: 100%;
     }
 }
 
