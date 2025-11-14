@@ -208,6 +208,7 @@ td {
 
 .nav-container {
     max-width: 1200px;
+	min-width: 770px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -392,5 +393,6 @@ td {
         padding: 15px;
     }
 }
+
 
 
