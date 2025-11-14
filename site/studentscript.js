@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			<div class="image-guide">
             <h3>План помещений АСЦ (Коломяжский д. 21, 2 этаж)</h3>
             <div class="guide-image-container">
-                <img src="../Plan-simcenter.png" class="guide-image">
+                <img src="Plan-simcenter.png" class="guide-image">
 			</div>
 			</div>
 		`,
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			<div class="image-guide">
             <h3>План помещений п. Солнечное, к. 7, 3 этаж </h3>
             <div class="guide-image-container">
-                <img src="../Plan-soln.jpg" class="guide-image">
+                <img src="Plan-soln.jpg" class="guide-image">
 			</div>
 			</div>
 		`
@@ -268,5 +268,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 });
+
 
 
