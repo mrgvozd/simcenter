@@ -369,7 +369,6 @@ td {
 /* Адаптивность для меню */
 @media (max-width: 768px) {
     .nav-tabs {
-        flex-direction: column;
         border-radius: 12px;
         padding: 8px;
     }
@@ -393,4 +392,5 @@ td {
         padding: 15px;
     }
 }
+
 
