@@ -2,8 +2,79 @@ document.addEventListener('DOMContentLoaded', function () {
     const tableBody = document.querySelector("#schedule-table tbody");
     const filterGroup = document.getElementById('filter-group');
 
-    let myData = []; // Для хранения исходных данных
-
+	// Данные для модальных окон
+	const modalContent = {
+		info: `
+			<h3>О расписании</h3>
+			<p>Это расписание занятий для учебных групп. Здесь вы можете:</p>
+			<ul>
+				<li>Просматривать расписание на всю неделю</li>
+				<li>Фильтровать занятия по группам, преподавателям* и аудиториям*</li>
+				<li>Находить конкретную аудиторию на общем плане</li>
+			</ul>
+			<p><strong>Обозначения:</strong></p>
+			<p>• Объединённые ячейки указывают на параллельные занятия</p>
+			<p>• Толстые линии разделяют разные временные блоки</p>
+		`,
+		help: `
+			<h3>Темы занятий</h3>
+			<p><strong>1 Курс</strong></p>
+			<ul>
+			
+				<li><b>Занятие 1:</b> <i>Базовая СЛР, ПП при отсутствии сознания, проходимость ВДП</i></li>
+				<li><b>Занятие 2:</b> <i>Первая Помощь при кровотечениях</i></li>
+				<li><b>Занятие 3:</b> <i>ПП при травмах, ожогах, отморожениях</i></li>
+				<li><b>Занятие 4:</b> <i>Извлечение и транспортировка пострадавших</i></li>
+				<li><b>Занятие 5:</b> <i>Зачет</i></li>
+			</ul>
+			<p><strong>3 Курс</strong></p>
+			<ul>
+			
+				<li><b>Занятие 1:</b> <i>Сердечно-легочная реанимация (СЛР) в стационаре – (BLS / AED)</i></li>
+				<li><b>Занятие 2:</b> <i>Контроль и коррекция внешнего дыхания</i></li>
+				<li><b>Занятие 3:</b> <i>Коммуникативные навыки</i></li>
+				<li><b>Занятие 4:</b> <i>Базовые методы оценки состояния пациента</i></li>
+				<li><b>Занятие 5:</b> <i>Обследование пациента на амбулаторном этапе (XR-clinic)</i></li>
+				<li><b>Занятие 6:</b> <i>Итоговое занятие</i></li>
+			</ul>
+		`,
+		contacts: `
+			<h3>Контакты</h3>
+			<p><strong>Техническая поддержка:</strong></p>
+			<ul>
+				<li>📧 Email: asc@almazovcentre.ru</li>
+				<li>📞 Телефон: +7 (812) 702-37-49 (002580)</li>
+				<li>🕒 Время работы: 10:00 - 16:00</li>
+			</ul>
+			<p><strong>Ответственные лица:</strong></p>
+			<ul>
+				<li>Лариса Александровна - методист</li>
+				<li>Николай Михайлович - технический администратор</li>
+			</ul>
+			<p>По всем вопросам обращайтесь в техническую поддержку.</p>
+		`,
+		asc: `
+			<div class="image-guide">
+            <h3>План помещений АСЦ (Коломяжский д. 21, 2 этаж)</h3>
+            <div class="guide-image-container">
+                <img src="../Plan-simcenter.png" class="guide-image">
+			</div>
+			</div>
+		`,
+		soln: `
+			<div class="image-guide">
+            <h3>План помещений п. Солнечное, к. 7, 3 этаж </h3>
+            <div class="guide-image-container">
+                <img src="../Plan-soln.jpg" class="guide-image">
+			</div>
+			</div>
+		`
+	};
+    
+	initNavigation();
+	
+	let myData = []; // Для хранения исходных данных
+	
 	// Чтение параметров из URL
     const urlParams = new URLSearchParams(window.location.search);
     const groupFilterValue = urlParams.get('group') || '';
@@ -13,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 
     // Загрузка данных из JSON
-    fetch('data.json')
+    fetch('..//data.json')
         .then(response => response.json())
         .then(jsonData => {
             myData = jsonData;
@@ -104,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		}
 	}
-
+	
 	function addSmartColumnBorders() {
 		const rows = tableBody.querySelectorAll("tr");
 		
@@ -152,7 +223,48 @@ document.addEventListener('DOMContentLoaded', function () {
 		applyFilters();
 		updateURL();
 	});
+	
+	
+	
+
+	// Инициализация меню
+	function initNavigation() {
+		const tabs = document.querySelectorAll('.nav-tab');
+		const modalOverlay = document.getElementById('modalOverlay');
+		const modalBody = document.querySelector('.modal-body');
+		const modalClose = document.querySelector('.modal-close');
+
+		// Обработчики для вкладок
+		tabs.forEach(tab => {
+			tab.addEventListener('click', () => {
+				const tabName = tab.dataset.tab;
+				
+				
+				// Показываем модальное окно с соответствующим контентом
+				modalBody.innerHTML = modalContent[tabName];
+				modalOverlay.classList.add('active');
+			});
+		});
+
+		// Закрытие модального окна
+		modalClose.addEventListener('click', closeModal);
+		modalOverlay.addEventListener('click', (e) => {
+			if (e.target === modalOverlay) {
+				closeModal();
+			}
+		});
+
+		// Закрытие по ESC
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+				closeModal();
+			}
+		});
+	}
+
+	function closeModal() {
+		const modalOverlay = document.getElementById('modalOverlay');
+		modalOverlay.classList.remove('active');
+	}
+
 });
-
-
-

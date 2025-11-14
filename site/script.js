@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 
     // Загрузка данных из JSON
-    fetch('data.json')
+    fetch('..//data.json')
         .then(response => response.json())
         .then(jsonData => {
             data = jsonData;
@@ -170,4 +170,3 @@ document.addEventListener('DOMContentLoaded', function () {
 		updateURL();
 	});
 });
-

@@ -6,21 +6,30 @@
     <title>Расписание занятий</title>
     <link rel="stylesheet" href="styles.css">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600&display=swap" rel="stylesheet">
-	<!-- Yandex.Metrika counter -->
-	<script type="text/javascript">
-	    (function(m,e,t,r,i,k,a){
-	        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-	        m[i].l=1*new Date();
-	        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-	        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-	    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104370976', 'ym');
-	
-	    ym(104370976, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
-	</script>
-	<noscript><div><img src="https://mc.yandex.ru/watch/104370976" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-	<!-- /Yandex.Metrika counter -->
 </head>
 <body>
+	<!-- Верхнее меню -->
+	<nav class="top-nav">
+		<div class="nav-container">
+			<div class="nav-tabs">
+				<button class="nav-tab" data-tab="info">ℹ️ О расписании</button>
+				<button class="nav-tab" data-tab="help">❓ Помощь</button>
+				<button class="nav-tab" data-tab="contacts">📞 Контакты</button>
+				<button class="nav-tab" data-tab="asc">⚙ План АСЦ</button>
+				<button class="nav-tab" data-tab="soln">⚙ План Солнечное</button>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Всплывающие окна -->
+	<div class="modal-overlay" id="modalOverlay">
+		<div class="modal-content">
+			<button class="modal-close">&times;</button>
+			<div class="modal-body">
+				<!-- Контент будет подгружаться динамически -->
+			</div>
+		</div>
+	</div>
     <div class="container">
         <h1>Расписание занятий в Симуляционном центре</h1>
 		
@@ -47,5 +56,4 @@
 
     <script src="studentscript.js"></script>
 </body>
-
 </html>
