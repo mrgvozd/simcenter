@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 
     // Загрузка данных из JSON
-    fetch('data.json')
+    fetch('https://github.com/mrgvozd/simcenter/blob/73b955ec1d13b7751fdf0dba11aee59dc680fb9d/site/data.json')
         .then(response => response.json())
         .then(jsonData => {
             myData = jsonData;
@@ -268,6 +268,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 });
+
 
 
 
