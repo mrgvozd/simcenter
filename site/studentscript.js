@@ -16,7 +16,27 @@ document.addEventListener('DOMContentLoaded', function () {
 			<p>• Объединённые ячейки указывают на параллельные занятия</p>
 			<p>• Толстые линии разделяют разные временные блоки</p>
 		`,
-		help: `
+		help: /*
+			<h3>Темы занятий</h3>
+			<p><strong>1 Курс</strong></p>
+			<ul>
+			
+				<li><b>Занятие 1:</b> <i>Базовая СЛР, ПП при отсутствии сознания, проходимость ВДП</i></li>
+				<li><b>Занятие 2:</b> <i>Первая Помощь при кровотечениях</i></li>
+				<li><b>Занятие 3:</b> <i>ПП при травмах, ожогах, отморожениях</i></li>
+				<li><b>Занятие 4:</b> <i>Извлечение и транспортировка пострадавших</i></li>
+				<li><b>Занятие 5:</b> <i>Зачет</i></li>
+			</ul>
+			<p><strong>3 Курс</strong></p>
+			<ul>
+			
+				<li><b>Занятие 1:</b> <i>Сердечно-легочная реанимация (СЛР) в стационаре – (BLS / AED)</i></li>
+				<li><b>Занятие 2:</b> <i>Контроль и коррекция внешнего дыхания</i></li>
+				<li><b>Занятие 3:</b> <i>Коммуникативные навыки</i></li>
+				<li><b>Занятие 4:</b> <i>Базовые методы оценки состояния пациента</i></li>
+				<li><b>Занятие 5:</b> <i>Обследование пациента на амбулаторном этапе (XR-clinic)</i></li>
+				<li><b>Занятие 6:</b> <i>Итоговое занятие</i></li>
+			</ul>
 			<h3>Темы занятий</h3>
 			<p><strong>2 Курс</strong></p>
 			<ul>
@@ -25,6 +45,17 @@ document.addEventListener('DOMContentLoaded', function () {
 				<li><b>Занятие 9:</b> <i>Внутривенные инфузии</i></li>
 				<li><b>Занятие 10:</b> <i>Зондовое промывание</i></li>
 				<li><b>Занятие 11:</b> <i>Уход за колостомами и трахеостомами</i></li>				
+				<li><b>Занятие 12:</b> <i>Итоговое занятие</i></li>
+			</ul>*/
+			`
+			<h3>Темы занятий</h3>
+			<p><strong>3 Курс</strong></p>
+			<ul>
+				<li><b>Занятие 7:</b> <i>Гидроторакс, Пиоторакс, Пневмоторакс, Михротрахеостомия</i></li>
+				<li><b>Занятие 8:</b> <i>Внутрикостный доступ, носовое кровотечение</i></li>
+				<li><b>Занятие 9:</b> <i>Базовые хирургические навыки</i></li>
+				<li><b>Занятие 10:</b> <i>ITLS</i></li>
+				<li><b>Занятие 11:</b> <i>БСЛР в особых условиях</i></li>				
 				<li><b>Занятие 12:</b> <i>Итоговое занятие</i></li>
 			</ul>
 			<p><strong>4 Курс</strong></p>
@@ -60,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			<div class="image-guide">
             <h3>План помещений АСЦ (Коломяжский д. 21, 2 этаж)</h3>
             <div class="guide-image-container">
-                <img src="https://raw.githubusercontent.com/mrgvozd/simcenter/refs/heads/main/site/Plan-simcenter.png" class="guide-image">
+                <img src="../Plan-simcenter.png" class="guide-image">
 			</div>
 			</div>
 		`,
@@ -68,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			<div class="image-guide">
             <h3>План помещений п. Солнечное, к. 7, 3 этаж </h3>
             <div class="guide-image-container">
-                <img src="https://raw.githubusercontent.com/mrgvozd/simcenter/refs/heads/main/site/Plan-soln.jpg" class="guide-image">
+                <img src="../Plan-soln.jpg" class="guide-image">
 			</div>
 			</div>
 		`
@@ -87,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 
     // Загрузка данных из JSON
-    fetch('https://raw.githubusercontent.com/mrgvozd/simcenter/refs/heads/main/site/data.json')
+    fetch('..//data.json')
         .then(response => response.json())
         .then(jsonData => {
             myData = jsonData;
@@ -271,10 +302,3 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 });
-
-
-
-
-
-
-
