@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			<h3>Темы занятий</h3>
 			<p><strong>3 Курс</strong></p>
 			<ul>
-				<li><b>Занятие 7:</b> <i>Амбулаторный прием (XR)</i></li>
+				<li><b>Занятие 7:</b> <i>Гидроторакс, Пиоторакс, Пневмоторакс, Михротрахеостомия</i></li>
 				<li><b>Занятие 8:</b> <i>Внутрикостный доступ, носовое кровотечение</i></li>
 				<li><b>Занятие 9:</b> <i>Базовые хирургические навыки</i></li>
 				<li><b>Занятие 10:</b> <i>ITLS</i></li>
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			<div class="image-guide">
             <h3>План помещений АСЦ (Коломяжский д. 21, 2 этаж)</h3>
             <div class="guide-image-container">
-                <img src="https://raw.githubusercontent.com/mrgvozd/simcenter/refs/heads/main/site/Plan-simcenter.png" class="guide-image">
+                <img src="../Plan-simcenter.png" class="guide-image">
 			</div>
 			</div>
 		`,
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			<div class="image-guide">
             <h3>План помещений п. Солнечное, к. 7, 3 этаж </h3>
             <div class="guide-image-container">
-                <img src="https://raw.githubusercontent.com/mrgvozd/simcenter/refs/heads/main/site/Plan-soln.jpg" class="guide-image">
+                <img src="../Plan-soln.jpg" class="guide-image">
 			</div>
 			</div>
 		`
@@ -116,17 +116,40 @@ document.addEventListener('DOMContentLoaded', function () {
     // Установка значений фильтров
     filterGroup.value = groupFilterValue;
 	
+	// Загрузка данных из JSON
+	async function loadData() {
+		const urls = ['data.json', '../data.json','https://simcenter.netlify.app/data.json', 'https://raw.githubusercontent.com/mrgvozd/simcenter/refs/heads/main/site/data.json'];
+		
+		for (let url of urls) {
+			try {
+				const response = await fetch(url);
+				if (response.ok) {
+					const data = await response.json();
+					console.log(`✅ Загружено из ${url}`);
+					return data;
+				}
+			} catch (e) {
+				console.log(`❌ Не удалось загрузить ${url}`);
+			}
+		}
+		throw new Error('Не удалось загрузить данные');
+	}
 
-    // Загрузка данных из JSON
-    fetch('https://raw.githubusercontent.com/mrgvozd/simcenter/refs/heads/main/site/data.json')
-        .then(response => response.json())
-        .then(jsonData => {
+	loadData()
+		.then(jsonData => {
             myData = jsonData;
             renderTable(myData);
             mergeCells(); // Объединение ячеек
 			addSmartColumnBorders();
         })
-        .catch(error => console.error("Ошибка загрузки данных:", error));
+		.catch(error => {
+			console.error(error);
+			document.querySelector('#schedule-table tbody').innerHTML = 
+				'<tr><td colspan="5">Ошибка загрузки, не удалось подключиться. Похоже кое-кто блокирует доступ к серверу :с</td></tr>';
+		});
+	
+    
+
 	
     // Функция для отрисовки таблицы
     function renderTable(myData) {
